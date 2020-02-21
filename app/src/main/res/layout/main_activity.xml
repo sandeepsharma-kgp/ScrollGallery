@@ -3,7 +3,7 @@
     <data>
         <variable
             name="mainViewModel"
-            type="com.sandeepsharma_kgp.scrollgallery.ui.main.MainViewModel" />
+            type="com.sandeepsharma_kgp.scrollgallery.MainViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

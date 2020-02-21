@@ -1,4 +1,4 @@
-package com.sandeepsharma_kgp.scrollgallery.ui.main
+package com.sandeepsharma_kgp.scrollgallery
 
 import androidx.lifecycle.ViewModel
 
