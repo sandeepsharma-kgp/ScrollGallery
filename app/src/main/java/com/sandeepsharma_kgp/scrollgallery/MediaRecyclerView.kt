@@ -323,6 +323,7 @@ class MediaRecyclerView : RecyclerView {
         val index = parent.indexOfChild(videoView)
         if (index >= 0) {
             parent.removeViewAt(index)
+            setVolumeControl(VolumeState.OFF)
             isVideoViewAdded = false
             viewHolderParent!!.setOnClickListener(null)
         }
@@ -363,11 +364,12 @@ class MediaRecyclerView : RecyclerView {
                 Log.d(TAG, "togglePlaybackState: enabling volume.")
                 setVolumeControl(VolumeState.ON)
 
-            } else if (volumeState == VolumeState.ON) {
-                Log.d(TAG, "togglePlaybackState: disabling volume.")
-                setVolumeControl(VolumeState.OFF)
-
             }
+//            else if (volumeState == VolumeState.ON) {
+//                Log.d(TAG, "togglePlaybackState: disabling volume.")
+//                setVolumeControl(VolumeState.OFF)
+//
+//            }
         }
     }
 

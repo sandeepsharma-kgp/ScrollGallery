@@ -5,7 +5,7 @@
 
         <variable
             name="mediaViewModel"
-            type="com.sandeepsharma_kgp.scrollgallery.MediaItemViewModel" />
+            type="com.sandeepsharma_kgp.scrollgallery.MediaObject" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
