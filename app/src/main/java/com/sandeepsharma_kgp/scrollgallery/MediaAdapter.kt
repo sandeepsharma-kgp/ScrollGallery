@@ -1,18 +1,21 @@
 package com.sandeepsharma_kgp.scrollgallery
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import com.sandeepsharma_kgp.scrollgallery.databinding.MediaItemBinding
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 
-public class MediaAdapter : ListAdapter<MediaObject, MediaAdapter.MediaViewHolder>(DiffCallback){
+public class MediaAdapter : ListAdapter<MediaObject, MediaAdapter.MediaViewHolder>(DiffCallback) {
     companion object DiffCallback : DiffUtil.ItemCallback<MediaObject>() {
         override fun areItemsTheSame(oldItem: MediaObject, newItem: MediaObject): Boolean {
             return oldItem === newItem
@@ -21,17 +24,11 @@ public class MediaAdapter : ListAdapter<MediaObject, MediaAdapter.MediaViewHolde
         override fun areContentsTheSame(oldItem: MediaObject, newItem: MediaObject): Boolean {
             return oldItem.title == newItem.title
         }
-}
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediaViewHolder {
-        return MediaViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.media_item,
-                parent,
-                false
-            )
-        )
+        return MediaViewHolder(MediaItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
 
@@ -39,7 +36,7 @@ public class MediaAdapter : ListAdapter<MediaObject, MediaAdapter.MediaViewHolde
         holder.bindMediaItems(getItem(position))
     }
 
-    class MediaViewHolder(itemView: View) : ViewHolder(itemView) {
+    class MediaViewHolder(private var binding: MediaItemBinding) : ViewHolder(binding.root) {
         val titleText = itemView.findViewById(R.id.title) as TextView
         val imageView = itemView.findViewById(R.id.mediaImage) as ImageView
         val volumeControl = itemView.findViewById(R.id.volume_control) as ImageView
@@ -47,8 +44,8 @@ public class MediaAdapter : ListAdapter<MediaObject, MediaAdapter.MediaViewHolde
 
         fun bindMediaItems(mediaObject: MediaObject) {
             itemView.setTag(this)
+            titleText.setText(mediaObject.title)
             if (mediaObject.mediaType == 4) {
-                titleText.setText("REPEATING IMAGE")
                 mediaObject.media_url?.let {
                     Picasso.with(imageView.context)
                         .load(it)
@@ -66,7 +63,6 @@ public class MediaAdapter : ListAdapter<MediaObject, MediaAdapter.MediaViewHolde
                         })
                 }
             } else {
-                titleText.setText(mediaObject.title)
                 Glide.with(itemView)
                     .load(mediaObject.media_url)
                     .into(imageView)

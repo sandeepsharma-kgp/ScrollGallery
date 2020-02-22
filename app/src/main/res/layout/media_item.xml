@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-            name="mediaViewModel"
-            type="com.sandeepsharma_kgp.scrollgallery.MediaItemViewModel" />
+            name="mediaObject"
+            type="com.sandeepsharma_kgp.scrollgallery.MediaObject" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -19,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:padding="10dp"
-            android:text="Text View"
+            android:text="TextView"
             android:textAlignment="center"
             android:textSize="20sp" />
 

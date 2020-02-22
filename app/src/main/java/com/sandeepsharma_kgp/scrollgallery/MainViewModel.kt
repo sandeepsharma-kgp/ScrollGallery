@@ -55,7 +55,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     var mediaObject: MediaObject
                     count++
                     if (count % 5 == 0) {
-                        mediaObject = MediaObject(null, "https://source.unsplash.com/random", 4)
+                        mediaObject = MediaObject("REPEATING IMAGE", "https://source.unsplash.com/random", 4)
                     } else {
                         mediaObject =
                             MediaObject(
