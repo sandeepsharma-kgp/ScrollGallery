@@ -11,10 +11,10 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
@@ -45,7 +45,7 @@ public class MediaRecyclerView : RecyclerView {
     private var videoPlayer: SimpleExoPlayer? = null
 
     // vars
-    private var mediaObjects = ArrayList<MediaObject>()
+    private lateinit var mediaObjects : List<MediaObject>
     private var videoSurfaceDefaultHeight = 0
     private var screenDefaultHeight = 0
     private var playPosition = -1
@@ -97,11 +97,11 @@ public class MediaRecyclerView : RecyclerView {
 
                     // There's a special case when the end of the list has been reached.
                     // Need to handle that with this bit of logic
-                    if (!recyclerView.canScrollVertically(1)) {
                         playVideo(true)
-                    } else {
-                        playVideo(false)
-                    }
+//                    if (!recyclerView.canScrollVertically(1)) {
+//                    } else {
+//                        playVideo(false)
+//                    }
                 }
             }
 
@@ -227,7 +227,7 @@ public class MediaRecyclerView : RecyclerView {
                 targetPosition = startPosition
             }
         } else {
-            targetPosition = mediaObjects.size - 1
+            targetPosition = mediaObjects.size.minus(1)
         }
 
         Log.d(TAG, "playVideo: target position: $targetPosition")
@@ -260,9 +260,11 @@ public class MediaRecyclerView : RecyclerView {
             playPosition = -1
             return
         }
-        if (mediaObjects[targetPosition].mediaType == 1 || mediaObjects[targetPosition].mediaType == 4) {
-            viewHolderParent?.setOnClickListener(null)
-            return
+        when(mediaObjects.get(targetPosition).mediaType) {
+            1,4->  {
+                viewHolderParent?.setOnClickListener(null)
+                return
+            }
         }
 
         thumbnail = holder.imageView
@@ -404,7 +406,7 @@ public class MediaRecyclerView : RecyclerView {
         }
     }
 
-    fun setMediaObjects(mediaObjects: ArrayList<MediaObject>) {
+    fun setMediaObjects(mediaObjects: List<MediaObject>) {
         this.mediaObjects = mediaObjects
     }
 }

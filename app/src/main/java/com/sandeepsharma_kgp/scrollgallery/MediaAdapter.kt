@@ -3,36 +3,28 @@ package com.sandeepsharma_kgp.scrollgallery
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.core.net.toUri
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.*
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
-import android.util.Log
-import android.widget.Toast
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 
-public class MediaAdapter(var mediaObjects: ArrayList<MediaObject>) :
-    RecyclerView.Adapter<ViewHolder>(), View.OnClickListener {
-    override fun onClick(v: View?) {
+public class MediaAdapter : ListAdapter<MediaObject, MediaAdapter.MediaViewHolder>(DiffCallback){
+    companion object DiffCallback : DiffUtil.ItemCallback<MediaObject>() {
+        override fun areItemsTheSame(oldItem: MediaObject, newItem: MediaObject): Boolean {
+            return oldItem === newItem
+        }
 
-    }
+        override fun areContentsTheSame(oldItem: MediaObject, newItem: MediaObject): Boolean {
+            return oldItem.title == newItem.title
+        }
+}
 
-    fun updateData(mediaObjects: ArrayList<MediaObject>) {
-        this.mediaObjects = mediaObjects
-    }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediaViewHolder {
         return MediaViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.media_item,
@@ -42,12 +34,9 @@ public class MediaAdapter(var mediaObjects: ArrayList<MediaObject>) :
         )
     }
 
-    override fun getItemCount(): Int {
-        return mediaObjects.size
-    }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        (holder as MediaViewHolder).bindMediaItems(mediaObjects[position])
+    override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
+        holder.bindMediaItems(getItem(position))
     }
 
     class MediaViewHolder(itemView: View) : ViewHolder(itemView) {

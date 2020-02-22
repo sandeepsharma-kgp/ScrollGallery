@@ -1,12 +1,10 @@
 package com.sandeepsharma_kgp.scrollgallery
 
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 
-//@BindingAdapter("listData")
-//fun bindRecyclerView(recyclerView: MediaRecyclerView, mediaAdapter: MediaAdapter,data: ArrayList<MediaObject>) {
-//    recyclerView.adapter = mediaAdapter
-//    recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
-//    mediaAdapter.updateData(data)
-//}
+
+@BindingAdapter("mediaListData")
+fun bindMediaRecyclerView(recyclerView: MediaRecyclerView,data: List<MediaObject>) {
+    if(recyclerView.adapter is MediaAdapter)
+        (recyclerView.adapter as MediaAdapter).submitList(data)
+}
