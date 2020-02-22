@@ -11,7 +11,6 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -26,9 +25,8 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import java.util.*
 
-public class MediaRecyclerView : RecyclerView {
+class MediaRecyclerView : RecyclerView {
     private val TAG = "VideoPlayerRecyclerView"
 
     private enum class VolumeState {
@@ -37,7 +35,7 @@ public class MediaRecyclerView : RecyclerView {
 
     // ui
     private var thumbnail: ImageView? = null
-    private var volumeControl:ImageView? = null
+    private var volumeControl: ImageView? = null
     private var progressBar: ProgressBar? = null
     private var viewHolderParent: View? = null
     private var frameLayout: FrameLayout? = null
@@ -45,7 +43,7 @@ public class MediaRecyclerView : RecyclerView {
     private var videoPlayer: SimpleExoPlayer? = null
 
     // vars
-    private lateinit var mediaObjects : List<MediaObject>
+    private lateinit var mediaObjects: List<MediaObject>
     private var videoSurfaceDefaultHeight = 0
     private var screenDefaultHeight = 0
     private var playPosition = -1
@@ -97,11 +95,11 @@ public class MediaRecyclerView : RecyclerView {
 
                     // There's a special case when the end of the list has been reached.
                     // Need to handle that with this bit of logic
+                    if (!recyclerView.canScrollVertically(1)) {
                         playVideo(true)
-//                    if (!recyclerView.canScrollVertically(1)) {
-//                    } else {
-//                        playVideo(false)
-//                    }
+                    } else {
+                        playVideo(false)
+                    }
                 }
             }
 
@@ -125,7 +123,7 @@ public class MediaRecyclerView : RecyclerView {
 
         videoPlayer!!.addListener(object : Player.EventListener {
             override fun onTimelineChanged(
-                timeline: Timeline,manifest: Any?,
+                timeline: Timeline, manifest: Any?,
                 reason: Int
             ) {
 
@@ -260,8 +258,8 @@ public class MediaRecyclerView : RecyclerView {
             playPosition = -1
             return
         }
-        when(mediaObjects.get(targetPosition).mediaType) {
-            1,4->  {
+        when (mediaObjects.get(targetPosition).mediaType) {
+            1, 4 -> {
                 viewHolderParent?.setOnClickListener(null)
                 return
             }

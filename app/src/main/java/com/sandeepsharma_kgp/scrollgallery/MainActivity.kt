@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sandeepsharma_kgp.scrollgallery.databinding.MainActivityBinding
 
-@Suppress("DEPRECATED_IDENTITY_EQUALS")
 class MainActivity : AppCompatActivity() {
 
     private val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: Int = 1
